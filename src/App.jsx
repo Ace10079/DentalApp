@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from './Layout/layout';
+import Layout from './Layout/Layout';
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from './Pages/Dashboard';
 import Table1 from './Pages/Table1';
@@ -10,7 +10,7 @@ import Table4 from './Pages/Table4';
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Layout/>}>
       <Route index element={<Dashboard />} /> 
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/table1" element={<Table1/>} />
