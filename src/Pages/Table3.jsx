@@ -17,7 +17,7 @@ function Table3() {
       return (
         <div className='lg:m-3 mt-14 m-3 overflow-auto'>
           <p className='p-2 font-bold font-[Century Gothic]'>
-            Subscriptions
+            Subscription
           </p>
           <div className='p-1 max-h-[350px]'>
             <table className='min-w-full divide-y divide-black border-black border'>
@@ -30,7 +30,7 @@ function Table3() {
                   <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Date & Time</th>
                   <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Transaction Id</th>
                   <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Transaction Status</th>
-                  <th className="border border-gray-500 px-6 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]"><IconDotsVertical stroke={1} /></th>
+                  <th className="border border-gray-500 px-6 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Expiry Date</th>
                 </tr>
               </thead>
               <tbody className='bg-white divide-y divide-black'>
@@ -43,7 +43,7 @@ function Table3() {
                     <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{row.dateTime}</td>
                     <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{row.transactionid}</td>
                     <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{row.transactionstatus}</td>
-                    <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]"><IconDotsVertical stroke={1} /></td>
+                    <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{row.dateTime}</td>
                   </tr>
                 ))}
               </tbody>

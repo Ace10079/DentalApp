@@ -1,28 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { IconUserCircle } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const [menuVisible, setMenuVisible] = useState(false);
   const navigate = useNavigate();
+  const dropdownRef = useRef(null); // Ref to track the dropdown
+
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
 
   const handleView = () => {
-    navigate('/profile');  // Navigate to the /profile page
+    navigate('/profile');
   };
 
   const handleEdit = () => {
-    console.log('Edit Profile');
+    console.log('Logout');
   };
 
-  const handleDelete = () => {
-    console.log('Delete Profile');
-  };
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setMenuVisible(false); // Close the menu if clicked outside
+      }
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownRef]);
 
   return (
-    <div className='mt-1 lg:m-3 flex justify-end text-black'>
+    <div className='mt-1 lg:m-3 flex justify-end text-black' ref={dropdownRef}>
       <button
         className='mr-2 lg:mr-1 p-2 rounded-lg font-bold flex gap-1'
         onClick={toggleMenu}

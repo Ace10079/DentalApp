@@ -35,7 +35,7 @@ function Table1() {
   return (
     <div className="lg:m-3 mt-14 m-3 overflow-auto">
       <p className="p-2 font-bold font-[Century Gothic]">
-        Recently Added Dashboard
+        Dentist
       </p>
 
       {/* Modal for Edit */}
@@ -63,14 +63,6 @@ function Table1() {
                 type="text"
                 className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
                 placeholder="abc@gmail.com"
-              />
-              <label htmlFor="" className="font-semibold">
-                Login Password
-              </label>
-              <input
-                type="text"
-                className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
-                placeholder="********"
               />
               <label htmlFor="" className="font-semibold">
                 Last Updated time:
@@ -137,10 +129,6 @@ function Table1() {
                 <p className="">Phone Number:</p>
               </div>
               <div className="flex justify-between mt-2">
-                <p className="font-semibold">Login Password:</p>
-                <p className="">********</p>
-              </div>
-              <div className="flex justify-between mt-2">
                 <p className="font-semibold">Last Updated time:</p>
                 <p className="">29 july 2024 - 11.30 am</p>
               </div>
@@ -157,7 +145,7 @@ function Table1() {
                   className="border border-black text-black px-7 py-2 ml-2 rounded-full "
                   onClick={() => setViewModal(false)}
                 >
-                  Cancel
+                  Back
                 </button>
               </div>
             </div>
