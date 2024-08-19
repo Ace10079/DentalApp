@@ -38,12 +38,12 @@ function Sidebar() {
                     )}
                     <IconMenuDeep stroke={2} className={`absolute ${open ? "lg:left-56 lg:top-2 lg:text-black text-white" : "lg:top-2 lg:text-black lg:left-2"} left-2 top-2`} onClick={() => setOpen(!open)} />
                 </div>
-                <div className='flex lg:justify-center'>
+                <div className='flex lg:justify-end'>
                     <ul className='lg:pt-1 lg:pl-2 pt-11 pl-2 flex flex-col lg:gap-2 gap-4 text-white justify-items-center'>
                         {menuItems.map((item) => (
                             <li
                                 key={item.name}
-                                className={`flex items-center ${activeItem === item.name ? 'bg-[#EEF1F6] text-black rounded-full' : 'text-opacity-40'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1] p-2 cursor-pointer`}
+                                className={`flex items-center ${activeItem === item.name ? 'bg-[#EEF1F6] text-black rounded-s-full' : 'text-opacity-40'} ${open ? 'lg:text-[20px] text-[14px]' : 'hidden lg:text-[14px]'} font-[Century Gothic] font-medium opacity-[1] p-2 cursor-pointer`}
                                 onClick={() => handleItemClick(item.name, item.path)}
                             >
                                 <span className='flex items-center w-full'>
