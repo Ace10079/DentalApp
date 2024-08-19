@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { IconUserCircle } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const [menuVisible, setMenuVisible] = useState(false);
-
+  const navigate = useNavigate();
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
 
   const handleView = () => {
-    console.log('View Profile');
+    navigate('/profile');  // Navigate to the /profile page
   };
 
   const handleEdit = () => {

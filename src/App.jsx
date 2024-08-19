@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Profiler } from 'react';
 import Layout from './layout/Layout'
 import { Routes, Route } from 'react-router-dom';
 import Dashboard from './Pages/Dashboard';
@@ -6,6 +6,7 @@ import Table1 from './Pages/Table1';
 import Table2 from './Pages/Table2';
 import Table3 from './Pages/Table3';
 import Table4 from './Pages/Table4';
+import Profile from './Pages/Profile';
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/table2" element={<Table2/>} />
         <Route path="/table3" element={<Table3/>} />
         <Route path="/table4" element={<Table4/>} />
+        <Route path="/profile" element={<Profile/>} />
       </Route>
     </Routes>
   );
