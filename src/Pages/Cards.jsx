@@ -5,7 +5,7 @@ import { IconUserPlus, IconUsers, IconSearch } from '@tabler/icons-react';
 function Cards() {
   
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 font-bold text-sm mt-3 lg:mx-2 mx-20">
+    <div className="grid grid-cols-1 lg:grid-cols-3 font-bold text-sm mt-3 lg:mx-2 mx-16">
       <div className="border-solid border-2 items-center rounded-lg flex justify-between bg-white hover:shadow-2xl w-64 lg:w-72 p-3">
         <div>
           <p>Total No. of Doctors</p>
