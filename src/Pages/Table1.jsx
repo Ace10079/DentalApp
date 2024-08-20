@@ -212,7 +212,7 @@ function Table1() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-black">
-            {rows.slice(0, 5).map((row, index) => (
+            {rows.slice(0, 10).map((row, index) => (
               <tr key={row.serial}>
                 <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">
                   {row.serial}
