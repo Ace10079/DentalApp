@@ -40,13 +40,21 @@ function Table2() {
       {/* Modal for Edit */}
       {EditModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded-lg shadow-lg w-[500px]">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[500px]">
             <div className="flex">
-              <h2 className="text-xl font-bold mb-4 ">Dentist Name -</h2>
-              <span className="ml-3 mt-1">Dentist ID</span>
+              <h2 className="text-xl font-bold mb-4 ">Edit</h2>
+              
             </div>
 
-            <div className="p-4">
+            <div className="p-6">
+            <label htmlFor="" className="font-semibold">
+                Dentist Name
+              </label>
+              <input
+                type="text"
+                className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
+                placeholder="Name"
+              />
               <label htmlFor="" className="font-semibold">
                 Phone Number:
               </label>
@@ -63,30 +71,7 @@ function Table2() {
                 className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
                 placeholder="abc@gmail.com"
               />
-              <label htmlFor="" className="font-semibold">
-                Last Updated time:
-              </label>
-              <input
-                type="text"
-                className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
-                placeholder="29 july 2024 - 11.30 am"
-              />
-              <label htmlFor="" className="font-semibold">
-                Created by user:
-              </label>
-              <input
-                type="text"
-                className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
-                placeholder="User"
-              />
-              <label htmlFor="" className="font-semibold">
-                Created time:
-              </label>
-              <input
-                type="text"
-                className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
-                placeholder="29 july 2024 - 11.30 am"
-              />
+
               <div className="flex justify-end gap-2 mt-2">
                 <button
                   className="border border-black text-black px-7 py-2 ml-2 rounded-full "
@@ -109,41 +94,28 @@ function Table2() {
       {/* Modal for View */}
       {ViewModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded-lg shadow-lg w-[500px]">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[500px]">
             <div className="flex">
-              <h2 className="text-xl font-bold mb-4 ">Dentist Name -</h2>
-              <span className="ml-3 mt-1">Dentist ID</span>
+              <h2 className="text-xl font-bold mb-4 ">View</h2>
             </div>
 
-            <div className="p-4">
-              <div className="flex justify-between">
-                <p className="font-semibold">Phone Number:</p>
-                <p className="">Telephone call</p>
-              </div>
-
-              <div className="flex justify-between mt-2">
-                <p className="font-semibold">Eamil ID:</p>
-                <p className="">abc@gmail.com</p>
-              </div>
-              <div className="flex justify-between mt-2">
-                <p className="font-semibold">Phone Number:</p>
-                <p className="">Phone Number:</p>
-              </div>
-              <div className="flex justify-between mt-2">
-                <p className="font-semibold">Last Updated time:</p>
-                <p className="">29 july 2024 - 11.30 am</p>
-              </div>
-              <div className="flex justify-between mt-2">
-                <p className="font-semibold">Created by user:</p>
-                <p className="">User</p>
-              </div>
-              <div className="flex justify-between mt-2">
-                <p className="font-semibold">Created time:</p>
-                <p className="">29 july 2024 - 11.30 am</p>
-              </div>
-              <div className="flex justify-end mt-5">
+            <div className="p-6">
+            <label htmlFor="" className="font-semibold">
+                Dentist Name
+              </label>
+              <p className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200">Name</p>
+              <label htmlFor="" className="font-semibold">
+                Phone Number
+              </label>
+              <p className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200">Telephone Call</p>
+              <label htmlFor="" className="font-semibold">
+                Email ID
+              </label>
+              <p className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200">abc@gmail.com</p>
+             
+              <div className="flex justify-center mt-5">
                 <button
-                  className="border border-black text-black px-7 py-2 ml-2 rounded-full "
+                  className="border border-black text-white bg-black px-9 py-2  rounded-full "
                   onClick={() => setViewModal(false)}
                 >
                   Back
@@ -153,8 +125,6 @@ function Table2() {
           </div>
         </div>
       )}
-
-      {/* Modal for Delete */}
       {DeleteModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-4 rounded-lg shadow-lg w-[350px] flex flex-col">
@@ -162,25 +132,26 @@ function Table2() {
               <IconTrashX className="text-red-500" />
             </div>
             <p className="text-center font-bold mb-3 mt-2">Delete</p>
-            <p className="text-center font-bold mb-3">Dentist Name</p>
+            <p className="text-center font-bold mb-3">User Name</p>
 
             <p className="text-center">
-              Are you sure? If you delete dentist ID, you can't retrieve your data.
+              Are you sure? If you delete dentist ID,you can't retrieve your
+              data
             </p>
             <div className="flex justify-center gap-2 mt-2">
-              <button
-                className="border border-red-600 text-red-600 px-7 py-2 ml-2 "
-                onClick={() => setDeleteModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="bg-[#001F2A] text-white px-7 py-2"
-                onClick={() => setDeleteModal(false)}
-              >
-                Continue
-              </button>
-            </div>
+                <button
+                  className="border border-red-600 text-red-600 px-7 py-2 rounded-full"
+                  onClick={() => setDeleteModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="bg-[#001F2A] text-white px-7 py-2 rounded-full"
+                  onClick={() => setDeleteModal(false)}
+                >
+                  Continue
+                </button>
+              </div>
           </div>
         </div>
       )}
