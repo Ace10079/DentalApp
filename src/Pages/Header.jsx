@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { IconUserCircle } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from './UserContext'; // Import useUser from UserContext
 
 function Header() {
   const [menuVisible, setMenuVisible] = useState(false);
   const navigate = useNavigate();
   const dropdownRef = useRef(null); // Ref to track the dropdown
+  const { adminName, setAdminName } = useUser(); // Get adminName from UserContext
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
@@ -15,8 +17,10 @@ function Header() {
     navigate('/profile');
   };
 
-  const handleEdit = () => {
-    console.log('Logout');
+  const handleLogout = () => {
+    localStorage.removeItem('authToken'); // Clear token on logout
+    setAdminName(null); // Clear adminName from context
+    navigate('/login'); // Redirect to login page
   };
 
   // Close dropdown when clicking outside
@@ -41,7 +45,7 @@ function Header() {
         onClick={toggleMenu}
       >
         <div>
-          <p>{'Profile Name'}</p>
+          <p>{adminName || 'Admin'}</p> {/* Display adminName */}
         </div>
         <div className='bg-[#99E9F5] rounded-full p-1'>
           <IconUserCircle stroke={2} className='' />
@@ -58,7 +62,7 @@ function Header() {
               Edit Profile
             </li>
             <li
-              onClick={handleEdit}
+              onClick={handleLogout}
               className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
             >
               Logout

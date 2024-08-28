@@ -9,21 +9,14 @@ function Profile() {
       <div className='w-full bg-white h-[450px] rounded-md'>
         <div className="p-10">
           <label htmlFor="" className="font-semibold">
-            Dentist Name
+          Name
           </label>
           <input
             type="text"
             className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
             placeholder="Name"
           />
-          <label htmlFor="" className="font-semibold">
-            Dentist Register Number
-          </label>
-          <input
-            type="text"
-            className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
-            placeholder="3546789"
-          />
+         
           <label htmlFor="" className="font-semibold">
             Email ID
           </label>
@@ -32,14 +25,7 @@ function Profile() {
             className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
             placeholder="abc@gmail.com"
           />
-          <label htmlFor="" className="font-semibold">
-            Phone Number
-          </label>
-          <input
-            type="text"
-            className="w-full border px-2 py-1 mb-2 rounded-md bg-slate-200"
-            placeholder="0000000"
-          />
+         
            <div className="flex justify-center gap-2 lg:mt-5 mt-12">
                 <button
                   className="border border-black text-black px-7 py-2 ml-2 rounded-full "
