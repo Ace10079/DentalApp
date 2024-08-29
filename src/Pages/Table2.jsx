@@ -12,6 +12,10 @@ function Table2() {
   const [selectedDentist, setSelectedDentist] = useState(null); // For modal display
   const [notification, setNotification] = useState({ message: "", type: "" });
   const [showNotification, setShowNotification] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // Number of dentists per page
 
   // Fetch dentists when component loads
   useEffect(() => {
@@ -60,7 +64,6 @@ function Table2() {
     }
   };
  
-
   const formatDate = (dateString) => {
     return format(new Date(dateString), 'dd MMMM yyyy - hh:mm a');
   };
@@ -72,7 +75,6 @@ function Table2() {
         dentist_name: selectedDentist.dentist_name,
         phone: selectedDentist.phone,
         email: selectedDentist.email,
-        // Add other fields as necessary
       };
   
       const response = await api.put(`/dentist/update?dentist_id=${selectedDentist.dentist_id}`, updatedDentistData);
@@ -100,9 +102,33 @@ function Table2() {
     }, 3000); // Hide after 3 seconds
   };
 
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  // Filter dentists based on search query
+  const filteredDentists = dentists.filter(dentist =>
+    dentist.dentist_id.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const currentDentists = filteredDentists.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredDentists.length / itemsPerPage);
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div>
-      {editModalVisible && (
+       {editModalVisible && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-[500px]">
             <div className="flex">
@@ -239,10 +265,18 @@ function Table2() {
           </div>
         </div>
       )}
-
-      {/* Rest of your component */}
       <div className="lg:m-3 mt-14 m-3">
-        <p className="p-2 font-bold font-[Century Gothic]">Search</p>
+      <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Search</h1>
+          <input
+            type="text"
+            placeholder="Search by ID..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border px-4 py-2 rounded-md"
+            style={{ marginRight: '0' }}
+          />
+        </div>
 
         {/* Scrollable Table */}
         <div className="p-1 max-h-[500px] lg:max-h-[500px] h-[calc(100vh-200px)] overflow-y-auto">
@@ -261,9 +295,9 @@ function Table2() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-black">
-              {dentists.map((dentist, index) => (
+              {currentDentists.map((dentist, index) => (
                 <tr key={dentist.dentist_id}>
-                  <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{index + 1}</td>
+                  <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{index + 1 + (currentPage - 1) * itemsPerPage}</td>
                   <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{dentist.dentist_id}</td>
                   <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{dentist.dentist_name}</td>
                   <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{formatDate(dentist.createdAt)}</td>
@@ -303,16 +337,26 @@ function Table2() {
             </tbody>
           </table>
         </div>
+        
+        {/* Pagination Buttons */}
+        <div className="mt-4 flex justify-end space-x-2">
+          <button
+            className={`px-3 py-2 rounded bg-gray-300 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={prevPage}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span className="px-3 py-2">Page {currentPage} of {totalPages}</span>
+          <button
+            className={`px-3 py-2 rounded bg-gray-300 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={nextPage}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
       </div>
-      <div
-  className={`fixed bottom-5 right-5 p-4 rounded-lg shadow-md text-white ${
-    showNotification ? "opacity-100 visible" : "opacity-0 invisible"
-  } transition-opacity duration-500 ease-in-out ${
-    notification.type === "success" ? "bg-green-500" : "bg-red-500"
-  }`}
->
-  {notification.message}
-</div>
     </div>
   );
 }
