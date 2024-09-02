@@ -31,14 +31,9 @@ function Profile() {
                   className="border border-black text-black px-7 py-2 ml-2 rounded-full "
                   onClick={() => setEditModal(false)}
                 >
-                  Cancel
+                  Logout
                 </button>
-                <button
-                  className="bg-[#001F2A] text-white px-7 py-2 rounded-full"
-                  onClick={() => setEditModal(false)}
-                >
-                  Save
-                </button>
+                
               </div>
         </div>
       </div>
