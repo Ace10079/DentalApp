@@ -22,6 +22,7 @@ function Sidebar() {
         { name: 'search', label: 'Searches', icon: <IconSearch stroke={1} />, path: '/table2' },
         { name: 'subscription', label: 'Subscriptions', icon: <IconWallet stroke={1} />, path: '/table3' },
         { name: 'admin', label: 'Admin', icon: <IconUserScan stroke={1} />, path: '/table4' },
+        { name: 'feedback', label: 'Feedback', icon: <IconUserScan stroke={1} />, path: '/table5' },
     ];
 
     const handleItemClick = (itemName, path) => {

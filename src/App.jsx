@@ -10,6 +10,7 @@ import Profile from './Pages/Profile';
 import Login from './Pages/Login';
 import PrivateRoute from './Pages/PrivateRoute';
 import { UserProvider } from './Pages/UserContext'; // Correct import
+import Table5 from './Pages/Table5';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/table2" element={<Table2 />} />
             <Route path="/table3" element={<Table3 />} />
             <Route path="/table4" element={<Table4 />} />
+            <Route path="/table5" element={<Table5/>} />
             <Route path="/profile" element={<Profile />} />
           </Route>
         </Route>
