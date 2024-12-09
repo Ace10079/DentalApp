@@ -22,7 +22,7 @@ function Table5() {
     // Filter rows based on search query
     const filteredRows = useMemo(() => {
         return rows.filter(row =>
-            row.response.toLowerCase().includes(searchQuery.toLowerCase())
+            row.dentist_name?.toLowerCase().includes(searchQuery.toLowerCase())
         );
     }, [searchQuery, rows]);
 
