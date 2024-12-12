@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { IconMenuDeep, IconSmartHome, IconWallet, IconSearch, IconUserScan, IconDental } from '@tabler/icons-react';
+import { IconMenuDeep, IconSmartHome, IconWallet, IconSearch, IconUserScan, IconDental,IconMessageDots } from '@tabler/icons-react';
 import '../index.css';
 
 function Sidebar() {
@@ -22,7 +22,8 @@ function Sidebar() {
         { name: 'search', label: 'Searches', icon: <IconSearch stroke={1} />, path: '/table2' },
         { name: 'subscription', label: 'Subscriptions', icon: <IconWallet stroke={1} />, path: '/table3' },
         { name: 'admin', label: 'Admin', icon: <IconUserScan stroke={1} />, path: '/table4' },
-        { name: 'feedback', label: 'Feedback', icon: <IconUserScan stroke={1} />, path: '/table5' },
+        { name: 'feedback', label: 'Feedback', icon: <IconMessageDots
+        stroke={1} />, path: '/table5' },
     ];
 
     const handleItemClick = (itemName, path) => {

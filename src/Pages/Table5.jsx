@@ -66,6 +66,7 @@ function Table5() {
                         <th className="border border-gray-400 px-1 py-1 text-center text-sm text-black bg-[#E7E7E7]">S.no</th>
                         <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Dentist ID.</th>
                         <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Dentist Name</th>
+                        <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Dentist Phone</th>
                         <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Response</th>
                         <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Comment</th>
                         <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Date</th>
@@ -77,6 +78,7 @@ function Table5() {
                             <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{index + 1 + (currentPage - 1) * rowsPerPage}</td>
                             <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{row.dentist_reg_number || 'N/A'}</td>
                             <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{row.dentist_name || 'N/A'}</td>
+                            <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{row.phone || 'N/A'}</td>
                             <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{row.response || 'N/A'}</td>
                             <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{row.comment || 'N/A'}</td>
                             <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">{formatDate(row.date)}</td>
