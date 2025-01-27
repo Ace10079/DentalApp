@@ -11,6 +11,8 @@ import Login from './Pages/Login';
 import PrivateRoute from './Pages/PrivateRoute';
 import { UserProvider } from './Pages/UserContext'; // Correct import
 import Table5 from './Pages/Table5';
+import Table6 from './Pages/Table6';
+import Packages from './Pages/Packages';
 
 export default function App() {
   return (
@@ -26,7 +28,9 @@ export default function App() {
             <Route path="/table3" element={<Table3 />} />
             <Route path="/table4" element={<Table4 />} />
             <Route path="/table5" element={<Table5/>} />
+            <Route path="/table6" element={<Table6/>} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/package" element={<Packages/>} />
           </Route>
         </Route>
       </Routes>

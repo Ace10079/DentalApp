@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { IconMenuDeep, IconSmartHome, IconWallet, IconSearch, IconUserScan, IconDental,IconMessageDots } from '@tabler/icons-react';
+import { IconMenuDeep, IconSmartHome, IconWallet, IconSearch, IconUserScan, IconDental,IconMessageDots, IconHelp, IconPackage } from '@tabler/icons-react';
 import '../index.css';
 
 function Sidebar() {
@@ -24,6 +24,8 @@ function Sidebar() {
         { name: 'admin', label: 'Admin', icon: <IconUserScan stroke={1} />, path: '/table4' },
         { name: 'feedback', label: 'Feedback', icon: <IconMessageDots
         stroke={1} />, path: '/table5' },
+        { name: 'support', label: 'Support', icon: <IconHelp stroke={1} />, path: '/table6' },
+        { name: 'packages', label: 'Packages', icon: <IconPackage stroke={1} />, path: '/package' },
     ];
 
     const handleItemClick = (itemName, path) => {
@@ -32,7 +34,7 @@ function Sidebar() {
     };
 
     return (
-        <div className="lg:relative relative">
+        <div className="lg:relative relative over">
             <div className={`${open ? "lg:w-[220px] w-[150px] h-screen lg:static absolute" : "lg:w-[0px] w-[0px] h-[0px]"} duration-300 lg:bg-[#001F2A] bg-[#001F2A] lg:h-screen roboto-regular`}>
                 <div className='flex justify-between relative'>
                     {open && (
