@@ -142,8 +142,9 @@ function Packages() {
         >
           <h3 className="font-bold text-lg">{pkg.package_name}</h3>
           <img src="./package.png" alt="" className='h-20 w-20' />
-          <p>MRP: ₹{pkg.mrp}</p>
-          <p>Offer: ₹{pkg.offer}</p>
+          <p>₹{pkg.mrp}</p>
+          <p className="line-through">₹{pkg.offer}</p>
+
           <p>Features: {pkg.features}</p>
           <p>Duration: {pkg.duration} months</p>
         </div>

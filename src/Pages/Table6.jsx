@@ -113,16 +113,30 @@ function Table6() {
         />
       </div>
 
-      <table className="min-w-full divide-y divide-black border-black border">
+      <table className="overflow-auto min-w-full divide-y divide-black border-black border">
         <thead className="bg-gray-50">
           <tr>
-            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">S.no</th>
-            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Ticket no</th>
-            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Date & Time</th>
-            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Raised by</th>
-            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Status</th>
-            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Subject</th>
-            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Actions</th>
+            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">
+              S.no
+            </th>
+            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">
+              Ticket no
+            </th>
+            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">
+              Date & Time
+            </th>
+            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">
+              Raised by
+            </th>
+            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">
+              Status
+            </th>
+            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">
+              Subject
+            </th>
+            <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -143,9 +157,15 @@ function Table6() {
               <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">
                 {row.status || "N/A"}
               </td>
-              <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">
-                {row.details || "N/A"}
-              </td>
+              <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0] break-words overflow-wrap break-word">
+  {row.details
+    ? row.details.split(" ").length > 10
+      ? row.details.split(" ").slice(0, 10).join(" ") + "..."
+      : row.details
+    : "N/A"}
+</td>
+
+
               <td className="border text-center border-gray-200 px-6 py-3 text-sm text-[#A0A0A0]">
                 <button
                   className="mx-2 text-black"
@@ -153,18 +173,14 @@ function Table6() {
                 >
                   <IconEye />
                 </button>
-                <button
-                  className="text-black"
-                  onClick={() => handleOpenModal(row, true)} // Open reply modal
-                >
-                  Reply
-                </button>
               </td>
             </tr>
           ))}
           {filteredRows.length === 0 && (
             <tr>
-              <td colSpan="7" className="text-center py-3">No data available</td>
+              <td colSpan="7" className="text-center py-3">
+                No data available
+              </td>
             </tr>
           )}
         </tbody>
