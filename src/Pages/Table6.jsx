@@ -7,12 +7,31 @@ function Table6() {
   const rowsPerPage = 5;
   const [searchQuery, setSearchQuery] = useState("");
   const [rows, setRows] = useState([]);
-  const [status, setStatus] = useState("New");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [isReply, setIsReply] = useState(false); // Track if modal is for reply
   const [reply, setReply] = useState("");
   const [previousReply, setPreviousReply] = useState(""); // Store previous reply
+  const [isEdit, setIsEdit] = useState(false); // Track if modal is in edit mode
+const [editedDetails, setEditedDetails] = useState(""); // Store edited details
+const [status, setStatus] = useState(selectedRow?.status || "new");
+
+const handleStatusUpdate = async () => {
+  try {
+    const response = await api.put(`/support/update?ticket_no=${selectedRow.ticket_no}`, {
+      status,
+    });
+    if (response.status === 200) {
+      alert("Status updated successfully!");
+      setIsModalVisible(false);
+    }
+  } catch (error) {
+    console.error("Error updating status:", error);
+    alert("Failed to update status.");
+  }
+};
+
+
 
   useEffect(() => {
     const savedStatus = localStorage.getItem("status");
@@ -91,15 +110,42 @@ function Table6() {
     }
   };
 
-  const handleOpenModal = (row, isReplyMode) => {
-    setIsModalVisible(true);
+  const handleOpenModal = (row, mode) => {
     setSelectedRow(row);
-    setIsReply(isReplyMode);
-    if (isReplyMode) {
-      fetchPreviousReply(row.ticket_no); // Fetch previous reply when in reply mode
+    setIsModalVisible(true);
+  
+    if (mode === "reply") {
+      setIsReply(true);
+      setIsEdit(false);
+      fetchPreviousReply(row.ticket_no);
+    } else if (mode === "edit") {
+      setIsEdit(true);
+      setIsReply(false);
+      setEditedDetails(row.details); // Pre-fill the input with existing details
+    } else {
+      setIsReply(false);
+      setIsEdit(false);
     }
   };
+  const handleEditSubmit = async () => {
+    try {
+      await api.put("/support/update", {
+        ticket_no: selectedRow.ticket_no,
+        details: editedDetails, // Send updated details
+      });
+      alert("Details updated successfully!");
+      setIsModalVisible(false);
+      // Refresh the data
+      const response = await api.get("/support/all");
+      setRows(response.data.data);
+    } catch (error) {
+      console.error("Failed to update details:", error);
+      alert("Failed to update. Please try again.");
+    }
+  };
+    
 
+  
   return (
     <div className="lg:m-3 mt-14 m-3 overflow-auto">
       <div className="flex justify-between items-center mb-4">
@@ -207,117 +253,126 @@ function Table6() {
       </div>
 
       {isModalVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-[500px] max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">
-                {isReply ? "Reply" : "Details"}
-              </h2>
-              <button
-                className="text-red-500"
-                onClick={() => setIsModalVisible(false)}
-              >
-                Close
-              </button>
-            </div>
-            {isReply ? (
-              <>
-                <textarea
-                  className="w-full border px-2 py-1 rounded mb-4"
-                  value={reply || previousReply} // Show previous reply if exists
-                  onChange={(e) => setReply(e.target.value)}
-                  placeholder="Type your reply here..."
-                ></textarea>
-                <button
-                  onClick={handleReplySubmit}
-                  className="w-full bg-blue-500 text-white px-4 py-2 rounded"
-                >
-                  Submit Reply
-                </button>
-              </>
-            ) : (
-              <>
-                <div className="mb-5">
-                  <label htmlFor="ticketNo" className="font-semibold">
-                    Phone Number
-                  </label>
-                  <p
-                    id="ticketNo"
-                    className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200"
-                  >
-                    {selectedRow?.phone || "N/A"}
-                  </p>
-                </div>
-
-                <div className="mb-5">
-                  <label htmlFor="status" className="font-semibold">
-                    Status
-                  </label>
-                  <p
-                    id="status"
-                    className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200"
-                  >
-                    {selectedRow?.status || "N/A"}
-                  </p>
-                </div>
-
-                <div className="mb-5">
-                  <label htmlFor="raisedBy" className="font-semibold">
-                    Raised By
-                  </label>
-                  <p
-                    id="raisedBy"
-                    className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200"
-                  >
-                    {selectedRow?.dentist_name || "N/A"}
-                  </p>
-                </div>
-
-                <div className="mb-5">
-                  <label htmlFor="details" className="font-semibold">
-                    Details
-                  </label>
-                  <p
-                    id="details"
-                    className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200"
-                  >
-                    {selectedRow?.details || "N/A"}
-                  </p>
-                </div>
-
-                <div className="mb-5">
-                  <label htmlFor="attachments" className="font-semibold">
-                    Attachments
-                  </label>
-                  <div
-                    id="attachments"
-                    className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200 flex justify-center items-center"
-                  >
-                    {selectedRow?.attachment ? (
-                      <img
-                        src={`${api.defaults.baseURL}/images/${selectedRow.attachment}`}
-                        alt="Attachment"
-                        className="w-16 h-16 object-cover"
-                      />
-                    ) : (
-                      <span>No Attachment</span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex justify-center mt-5">
-                  <button
-                    className="border border-black text-white bg-black px-9 py-2 rounded-full"
-                    onClick={() => setIsReply(true)} // Trigger reply mode
-                  >
-                    Reply
-                  </button>
-                </div>
-              </>
-            )}
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-[500px] max-h-[90vh] overflow-y-auto">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold">{isReply ? "Reply" : "Details"}</h2>
+        <button
+          className="text-red-500"
+          onClick={() => setIsModalVisible(false)}
+        >
+          Close
+        </button>
+      </div>
+      {isReply ? (
+        <>
+          <textarea
+            className="w-full border px-2 py-1 rounded mb-4"
+            value={reply || previousReply}
+            onChange={(e) => setReply(e.target.value)}
+            placeholder="Type your reply here..."
+          ></textarea>
+          <button
+            onClick={handleReplySubmit}
+            className="w-full bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Submit Reply
+          </button>
+        </>
+      ) : (
+        <>
+          <div className="mb-5">
+            <label htmlFor="ticketNo" className="font-semibold">
+              Phone Number
+            </label>
+            <p
+              id="ticketNo"
+              className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200"
+            >
+              {selectedRow?.phone || "N/A"}
+            </p>
           </div>
-        </div>
+
+          <div className="mb-5">
+            <label htmlFor="status" className="font-semibold">
+              Status
+            </label>
+            <select
+              id="status"
+              className="w-full border px-2 py-1 mb-5 rounded-md bg-white"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="New">New</option>
+              <option value="Completed">Completed</option>
+              <option value="Incomplete">Incomplete</option>
+            </select>
+            <button
+              onClick={handleStatusUpdate}
+              className="mt-2 bg-green-500 text-white px-4 py-2 rounded"
+            >
+              Save
+            </button>
+          </div>
+
+          <div className="mb-5">
+            <label htmlFor="raisedBy" className="font-semibold">
+              Raised By
+            </label>
+            <p
+              id="raisedBy"
+              className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200"
+            >
+              {selectedRow?.dentist_name || "N/A"}
+            </p>
+          </div>
+
+          <div className="mb-5">
+            <label htmlFor="details" className="font-semibold">
+              Details
+            </label>
+            <p
+              id="details"
+              className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200"
+            >
+              {selectedRow?.details || "N/A"}
+            </p>
+          </div>
+
+          <div className="mb-5">
+            <label htmlFor="attachments" className="font-semibold">
+              Attachments
+            </label>
+            <div
+              id="attachments"
+              className="w-full border px-2 py-1 mb-5 rounded-md bg-slate-200 flex justify-center items-center"
+            >
+              {selectedRow?.attachment ? (
+                <img
+                  src={`${api.defaults.baseURL}/images/${selectedRow.attachment}`}
+                  alt="Attachment"
+                  className="w-16 h-16 object-cover"
+                />
+              ) : (
+                <span>No Attachment</span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex justify-center mt-5">
+            <button
+              className="border border-black text-white bg-black px-9 py-2 rounded-full"
+              onClick={() => setIsReply(true)}
+            >
+              Reply
+            </button>
+          </div>
+        </>
       )}
+    </div>
+  </div>
+)}
+
     </div>
   );
 }
