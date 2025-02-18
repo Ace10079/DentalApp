@@ -1,29 +1,40 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import { api } from '../Host'; // Import the API instance
-import { useUser } from './UserContext'; // Import useUser from UserContext
+import { useNavigate } from 'react-router-dom';
+import { api } from '../Host';
+import { useUser } from './UserContext';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
-  const { setAdminName } = useUser(); // Get setAdminName from UserContext
+  const navigate = useNavigate();
+  const { setAdminName } = useUser();
 
   const handleLogin = async () => {
     try {
-      const response = await api.post('/admin/login', { email, password }); // Use the api instance
-      console.log('Login successful:', response.data);
+      const response = await api.post('/admin/login', { email, password });
 
-      // Store token and adminName, and redirect to dashboard
-      localStorage.setItem('authToken', response.data.token); // Store the token
-      setAdminName(response.data.admin_name); // Set adminName in context
+      if (!response.data || !response.data.token) {
+        throw new Error('Invalid response from server');
+      }
+      console.log("API Response:", response.data);
+
+
+      // Store credentials in localStorage
+      localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('adminId', response.data.admin_id);
+      localStorage.setItem('adminName', response.data.admin_name);
+      localStorage.setItem('adminEmail', response.data.email);
+
+      // Update context
+      setAdminName(response.data.admin_name);
+
       setSuccess('Login successful! Redirecting to dashboard...');
-      setTimeout(() => navigate('/dashboard'), 1000); // Redirect after 2 seconds
+      setTimeout(() => navigate('/dashboard'), 1000);
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
-      setError('Invalid email or password.'); // Set error message
+      setError(error.response?.data?.message || 'Invalid email or password.');
     }
   };
 
@@ -32,7 +43,7 @@ function Login() {
       <div className="w-full lg:w-1/2 bg-[#001F2A] flex items-center justify-center">
         <img src="./login.png" alt="Login" className="h-96 w-96" />
       </div>
-      <div className='w-full lg:w-1/2 flex items-center justify-center bg-white p-4 lg:p-8'>
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white p-4 lg:p-8">
         <div className="w-full max-w-sm">
           {success && (
             <div className="mb-4 p-3 bg-green-100 text-green-800 border border-green-300 rounded-md">
@@ -45,10 +56,9 @@ function Login() {
             </div>
           )}
           <div className="mb-4">
-            <img src="./logo.png" alt="" />
+            <img src="./logo.png" alt="Logo" />
             <input
               type="email"
-              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border px-3 py-2 rounded-md"
@@ -58,7 +68,6 @@ function Login() {
           <div className="mb-6">
             <input
               type="password"
-              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border px-3 py-2 rounded-md"

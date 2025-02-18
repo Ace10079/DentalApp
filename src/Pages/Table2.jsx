@@ -22,7 +22,7 @@ function Table2() {
     const fetchDentists = async () => {
       try {
         const response = await api.get('/dentist/get'); // Fetch all dentists from your backend
-        setDentists(response.data.data);
+        setDentists(response.data.data.reverse());
       } catch (error) {
         console.error("Failed to fetch dentists:", error);
       }

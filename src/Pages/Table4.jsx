@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { IconDotsVertical, IconTrashX } from '@tabler/icons-react'; // Added IconTrashX
 import { api } from '../Host'; // Import the API
 import { format } from 'date-fns';
+
 function Table4() {
   const [menuVisible, setMenuVisible] = useState(null);
   const [editModalVisible, setEditModalVisible] = useState(false);
@@ -73,7 +74,7 @@ function Table4() {
         // Add other fields as necessary
       };
   
-      const response = await api.put(`/admin/update?admin_id=${selectedadmin.admin_id}`, updatedAdminData);
+      const response = await api.put(`/admin/update-admin?admin_id=${selectedadmin.admin_id}`, updatedAdminData);
   
       if (response.status === 200) {
         setadmins(admins.map(admin =>

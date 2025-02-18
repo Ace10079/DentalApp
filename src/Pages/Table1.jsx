@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IconDotsVertical, IconTrashX } from "@tabler/icons-react";
 import { api } from '../Host'; // Import the API
 import { format } from 'date-fns';
+import * as XLSX from "xlsx"; // Import the xlsx library
 
 function Table1() {
   const [menuVisible, setMenuVisible] = useState(null);
@@ -22,13 +23,33 @@ function Table1() {
     const fetchDentists = async () => {
       try {
         const response = await api.get('/dentist/get'); // Fetch all dentists from your backend
-        setDentists(response.data.data);
+        setDentists(response.data.data.reverse());
       } catch (error) {
         console.error("Failed to fetch dentists:", error);
       }
     };
     fetchDentists();
   }, []);
+
+  const downloadExcel = () => {
+    const data = dentists.map(dentist => ({
+      "Dentist ID": dentist.dentist_id,
+      "Dentist Name": dentist.dentist_name,
+      "Date & Time": format(new Date(dentist.createdAt), 'dd MMMM yyyy - hh:mm a'),
+      "Phone Number": dentist.phone,
+      "Email ID": dentist.email
+    }));
+
+    // Create a worksheet from the data
+    const ws = XLSX.utils.json_to_sheet(data);
+    // Create a workbook and append the worksheet
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Dentists");
+
+    // Generate the Excel file and prompt download
+    XLSX.writeFile(wb, "Dentists_Data.xlsx");
+  };
+
 
   const toggleMenu = (index) => {
     setMenuVisible(menuVisible === index ? null : index);
@@ -108,8 +129,12 @@ function Table1() {
 
   // Filter dentists based on search query
   const filteredDentists = dentists.filter(dentist =>
-    dentist.dentist_id.toLowerCase().includes(searchQuery.toLowerCase())
+    dentist.dentist_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    dentist.dentist_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    dentist.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    dentist.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  
 
   const currentDentists = filteredDentists.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(filteredDentists.length / itemsPerPage);
@@ -339,7 +364,16 @@ function Table1() {
         </div>
         
         {/* Pagination Buttons */}
-        <div className="mt-4 flex justify-end space-x-2">
+        <div className="mt-4 flex justify-between space-x-2">
+          <div>
+          <button
+            onClick={downloadExcel}
+            className="bg-[#001F2A] text-white px-7 py-2 rounded-full"
+          >
+            Download Data
+          </button>
+          </div>
+          <div>
           <button
             className={`px-3 py-2 rounded bg-gray-300 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={prevPage}
@@ -355,6 +389,8 @@ function Table1() {
           >
             Next
           </button>
+          </div>
+         
         </div>
       </div>
     </div>

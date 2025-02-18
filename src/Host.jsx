@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: 'http://localhost:3000', // Your backend URL
+  baseURL: 'https://dental-backend-lkp2.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },

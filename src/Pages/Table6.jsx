@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { api } from "../Host";
 import { format } from "date-fns";
 import { IconEye } from "@tabler/icons-react";
-
+import * as XLSX from "xlsx";
 function Table6() {
   const rowsPerPage = 5;
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,6 +31,24 @@ const handleStatusUpdate = async () => {
   }
 };
 
+const downloadExcel = () => {
+  const data = rows.map(dentist => ({
+    "Ticket No": dentist.ticket_no,
+    "Raissed By": dentist.dentist_name,
+    "Status": dentist.status,
+    "Subject": dentist.details,
+    "Date & Time": format(new Date(dentist.createdAt), 'dd MMMM yyyy - hh:mm a'),
+  }));
+
+  // Create a worksheet from the data
+  const ws = XLSX.utils.json_to_sheet(data);
+  // Create a workbook and append the worksheet
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Support");
+
+  // Generate the Excel file and prompt download
+  XLSX.writeFile(wb, "Support_Data.xlsx");
+};
 
 
   useEffect(() => {
@@ -44,7 +62,7 @@ const handleStatusUpdate = async () => {
     const fetchSupport = async () => {
       try {
         const response = await api.get("/support/all");
-        setRows(response.data.data);
+        setRows(response.data.data.reverse());
       } catch (error) {
         console.error("Failed to fetch support:", error);
       }
@@ -232,7 +250,16 @@ const handleStatusUpdate = async () => {
         </tbody>
       </table>
 
-      <div className="mt-4 flex justify-end space-x-2">
+      <div className="mt-4 flex justify-between space-x-2">
+        <div>
+        <button
+            onClick={downloadExcel}
+            className="bg-[#001F2A] text-white px-7 py-2 rounded-full"
+          >
+            Download Data
+          </button>
+        </div>
+        <div>
         <button
           onClick={handlePrevPage}
           disabled={currentPage === 1}
@@ -250,6 +277,8 @@ const handleStatusUpdate = async () => {
         >
           Next
         </button>
+        </div>
+        
       </div>
 
       {isModalVisible && (
