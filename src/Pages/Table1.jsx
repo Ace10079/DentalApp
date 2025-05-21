@@ -34,6 +34,7 @@ function Table1() {
   const downloadExcel = () => {
     const data = dentists.map(dentist => ({
       "Dentist ID": dentist.dentist_id,
+      "Dentist Register No":dentist.dentist_reg_number,
       "Dentist Name": dentist.dentist_name,
       "Date & Time": format(new Date(dentist.createdAt), 'dd MMMM yyyy - hh:mm a'),
       "Phone Number": dentist.phone,
@@ -310,6 +311,7 @@ function Table1() {
               <tr>
                 <th className="border border-gray-400 px-1 py-1 text-center text-sm text-black bg-[#E7E7E7]">S.no</th>
                 <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Dentist ID</th>
+                <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Reg No</th>
                 <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Dentist Name</th>
                 <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Date & Time</th>
                 <th className="border border-gray-500 px-1 py-1 text-center text-sm text-black tracking-wider bg-[#E7E7E7]">Phone Number</th>
@@ -324,6 +326,7 @@ function Table1() {
                 <tr key={dentist.dentist_id}>
                   <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{index + 1 + (currentPage - 1) * itemsPerPage}</td>
                   <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{dentist.dentist_id}</td>
+                  <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{dentist.dentist_reg_number}</td>
                   <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{dentist.dentist_name}</td>
                   <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{formatDate(dentist.createdAt)}</td>
                   <td className="border text-center border-gray-200 px-4 lg:px-6 py-3 text-sm text-[#A0A0A0]">{dentist.phone}</td>
